@@ -2,13 +2,38 @@
 library(ggplot2)
 library(dplyr)
 library(tidyr)
+library(runjags)
+library(coda)
+library(rjags)
+require(rjags)
+require(coda)
+require(invgamma)
+
+
 
 #Include the data file
 source(file = "data/data.R")
 
+y <- data[,1]
+x1 <- data[,2]
+x2 <- data[,3]
+n <- nrow(data)
 
-#Have a look at the plots
-p <- ggplot(data, aes(y=y,x=x))
-p+geom_point(aes(x,y), size = 2, colour="#CC0000")+stat_smooth(method = "lm", formula = y ~ x + I(x^2), size = 1)+labs(title="Quadratic regression model", x ="Number of telephone calls", y = "Duration of telephone calls",subtitle = "Model fitted wiht a quadratic approximation")
+model.inits <- list(invSigma2=1, alpha=1, beta=0, gamma=0)
+iterations <- 10000
+burnin <- floor(iterations/2)
+chains <- 2
 
-ggsave("fig/quadraticregression.png", width = 10, height = 8)
+model.fit <- jags.model(file="src/Regression2JAGS.txt", data=list(n=n, y=y, x1=x1, x2=x2), inits=model.inits, n.chains = chains)
+
+model.samples <- coda.samples(model.fit, c("alpha", "beta", "gamma", "R2B", "sigma2"), n.iter=iterations)
+
+summary(window(model.samples, start = burnin))
+
+plot(model.samples, trace=FALSE, density = TRUE)   
+
+
+
+
+
+
