@@ -63,3 +63,4 @@ ggs_compare_partial(S)+ggtitle("Comparison of the whole chain to the last 10%")
 
 
 #Check this and write up a report on the results of prior sensitivity.
+
