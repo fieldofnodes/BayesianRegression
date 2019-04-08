@@ -6,14 +6,10 @@ model {
 	}
 
 	#priors
-	#invSigma2 ~ dgamma(0.001,0.001)
-	invSigma2 ~ dunif(0, 1)
-	#alpha ~ dnorm(0.0,0.000001)
-	alpha ~ dunif(0, 1)
-	#beta~ dnorm(0.0,0.000001)
-	beta ~ dunif(0, 1)
-	#gamma ~ dnorm(0.0,0.000001)
-	gamma ~ dunif(0, 1)
+	invSigma2 ~ dunif(0, 20)
+	alpha ~ dunif(-100, 100)
+	beta ~ dunif(-100, 100)
+	gamma ~ dunif(-100, 100)
 
 	#sigma
 	sigma2 <- 1/invSigma2
