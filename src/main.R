@@ -37,7 +37,7 @@ burnin <- floor(iterations/2)
 chains <- 2
 
 #Fitting model from JAGS code and specifying the variable names according to the data. x2 is x^2 which has been performed in the file = "data/data.R"
-model.fit <- jags.model(file="src/Regression2JAGS.txt", data=list(n=n, y=y, x1=x1, x2=x2), inits=model.inits, n.chains = chains)
+model.fit <- jags.model(file="src/Regression2JAGSVaguePrior.txt", data=list(n=n, y=y, x1=x1, x2=x2), inits=model.inits, n.chains = chains)
 
 #Coda samples coerces the data from model.fit to a list of teh MCMC flavour.
 model.samples <- coda.samples(model.fit, c("alpha", "beta", "gamma", "sigma2"), n.iter=iterations)
