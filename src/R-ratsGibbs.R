@@ -150,4 +150,3 @@ ratsGibbs <- function(nt) {
   output
   
 }
-
